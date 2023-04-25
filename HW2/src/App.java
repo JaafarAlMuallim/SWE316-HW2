@@ -1,27 +1,28 @@
 import java.io.File;
-import java.util.ArrayList;
 
 public class App {
-    private static ArrayList<Edoc> edoc = new ArrayList<>();
     public static void main(String[] args) throws Exception {
-        File file = new File("/Users/ja3faral-muallim/Desktop/Development/SWE316-HW2");
-        getEdocs(file);
-        // File[] files = file.listFiles();
-        // for (File f : files) {
-        //     System.out.println(f.);
-        // }
+        File rootDir = new File("/Users/ja3faral-muallim/Desktop/Development/Demo");
 
+        // Create the root folder component
+        Folder rootFolder = new Folder(rootDir.getName());
+
+        // Recursively traverse the root directory and create components for files and folders
+        traverseDirectory(rootDir, rootFolder);
+
+        // Display the file system
+        rootFolder.print(0);
     }
 
-    public static void getEdocs(File path){
-        if(path.isDirectory()){
-            File[] files = path.listFiles();
-            for (File f : files) {
-                getEdocs(f);
+    private static void traverseDirectory(File directory, Folder folder) {
+        for (File file : directory.listFiles()) {
+            if (file.isFile()) {
+                folder.add(new Document(file.getName(), file.length()));
+            } else if (file.isDirectory()) {
+                Folder subFolder = new Folder(file.getName());
+                folder.add(subFolder);
+                traverseDirectory(file, subFolder);
             }
-            edoc.add(new Folder(path.getName()));
-        } else {
-            edoc.add(new Document(path.getName(), path.length()));
-        }
         }
     }
+}

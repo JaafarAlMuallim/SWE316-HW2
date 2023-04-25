@@ -1,34 +1,45 @@
-class Document extends Edoc {
+// import java.text.DecimalFormat;
+
+
+
+
+class Document implements Edoc {
     private String name;
-    private int size;
+    private double size;
     private String extension;
-    
-// constructor
+
     public Document(String name, long size) {
-        super(name, size);
+        this.name = name;
+        this.size = size;
+        extension = showExtension();
     }
 
-    // getters
     public String getName() {
         return name;
     }
-    public long getSize() {
-        return size;
+    public double calculateSize() {
+        return size / 1024;
     }
+
     public String getExtension() {
         return extension;
     }
 
-    public String toString() {
-        return " Size: " + size + "-- " + name + "." + extension;
+    @Override
+    public void print(int level) {
+        for (int i = 0; i < level; i++) {
+            System.out.print("  ");
+        }
+        System.out.printf("-|- "+name.substring(0, name.lastIndexOf(".")) + "." + extension + " %.02f  KB\n", calculateSize());
+
     }
     @Override
-    public void print() {
-        System.out.println(name);
-    }
-    @Override
-    public void calculateSize() throws UnsupportedOperationException{
-        // throw Unsupportated operation
-        throw new UnsupportedOperationException("Not Supported");
+    public String showExtension() {
+        int dotIndex = name.lastIndexOf('.');
+        if (dotIndex >= 0 && dotIndex < name.length() - 1) {
+            return name.substring(dotIndex + 1);
+        } else {
+            return "";
+        }
     }
 }

@@ -1,58 +1,52 @@
 import java.util.ArrayList;
+import java.util.List;
 
 
 
-class Folder extends Edoc {
+class Folder implements Edoc {
     private String name;
-    private int size;
-    private ArrayList<Edoc> arrayList;
-
+    private double size;
+    private List<Edoc> list;
 
     public Folder(String name) {
-        super(name);
-    }
-    // public Folder(String name, ArrayList<Edoc> arrayList) {
-    //     super(name, arrayList);
-    // }
-    public Folder(String name, long size, ArrayList<Edoc> arrayList) {
-        super(name, size, arrayList);
+        this.name = name;
+        this.size = 0;
+        this.list = new ArrayList<>();
     }
 
     public String getName() {
         return name;
     }
-    public long getSize() {
+
+    public void add(Edoc edoc) {
+        list.add(edoc);
+
+    }
+    public void remove(Edoc edoc) {
+        list.remove(edoc);
+    }
+
+    @Override
+    public void print(int level) {
+        for (int i = 0; i < level; i++) {
+            System.out.print("  ");
+        }
+        System.out.printf("-|- "+name + " %.02f KB\n", calculateSize());
+        for (Edoc edoc : list) {
+            edoc.print(level + 1);
+        }
+    }
+
+    public double calculateSize(){
+        for(Edoc edoc : list){
+            size += edoc.calculateSize();
+        }
+        
         return size;
     }
-    public ArrayList<Edoc> getDocs() {
-        return arrayList;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setSize(int size) {
-        this.size = size;
-    }
-    public void setExtension(ArrayList<Edoc> arrayList) {
-        this.arrayList = arrayList;
-    }
-
     @Override
-    public void print() {
-        System.out.println("|"+name);
-        for (Edoc edoc : arrayList) {
-            System.out.println("  |"+edoc.getName());
-        }
-    }
-
-    @Override
-    public void calculateSize() {
-        int calculated = 0;
-        for (Edoc edoc : arrayList) {
-            calculated += edoc.getSize();
-        }
-        System.out.println(calculated);
+    public String showExtension() {
+        return "";
     }
 
 }
