@@ -1,9 +1,24 @@
 import java.io.File;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        File rootDir = new File("/Users/ja3faral-muallim/Desktop/Development/Demo");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter your directory name: ");
+        String dirName = sc.nextLine();
 
+        sc.close();
+        // File rootDir = new File("/Users/ja3faral-muallim/Desktop/Development/Demo");
+        File rootDir = new File(dirName);
+        if(!rootDir.exists()){
+            System.out.println("The directory does not exist");
+            return;
+        }
+        if(rootDir.isFile()){
+            System.out.println("The given input is a file");
+            System.out.println(rootDir.getName());
+            return;
+        }
         // Create the root folder component
         Folder rootFolder = new Folder(rootDir.getName());
 
