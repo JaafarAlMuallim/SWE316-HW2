@@ -1,8 +1,3 @@
-// import java.text.DecimalFormat;
-
-
-
-
 class Document implements Edoc {
     private String name;
     private double size;
@@ -17,6 +12,8 @@ class Document implements Edoc {
     public String getName() {
         return name;
     }
+    
+    @Override
     public double calculateSize() {
         return size / 1024;
     }
@@ -28,9 +25,9 @@ class Document implements Edoc {
     @Override
     public void print(int level) {
         for (int i = 0; i < level; i++) {
-            System.out.print("  ");
+            System.out.print("|  ");
         }
-        System.out.printf("-|- "+name.substring(0, name.lastIndexOf(".")) + "." + extension + " %.02f  KB\n", calculateSize());
+        System.out.printf("|-- "+name.substring(0, name.lastIndexOf(".")) + "." + extension + " %.02f  KB\n", calculateSize());
 
     }
     @Override

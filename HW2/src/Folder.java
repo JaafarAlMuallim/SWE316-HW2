@@ -29,9 +29,9 @@ class Folder implements Edoc {
     @Override
     public void print(int level) {
         for (int i = 0; i < level; i++) {
-            System.out.print("  ");
+            System.out.print("|  ");
         }
-        System.out.printf("-|- "+name + " %.02f KB\n", calculateSize());
+        System.out.printf("|-- "+name + " %.02f KB\n", calculateSize());
         for (Edoc edoc : list) {
             edoc.print(level + 1);
         }
